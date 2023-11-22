@@ -85,7 +85,7 @@ These terms and conditions are subject to the laws of the State of Spain.
                       ),
                       FilledButton(
                         onPressed:
-                            _isTermsAccepted.value ? () => Navigator.of(context).pushNamed(RouteNames.userForm) : null,
+                            _isTermsAccepted.value ? () => Navigator.of(context).restorablePushNamed(RouteNames.userForm) : null,
                         child: Text('Next'),
                       ),
                     ],
