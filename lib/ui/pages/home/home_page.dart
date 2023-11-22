@@ -31,7 +31,7 @@ class HomePage extends StatelessWidget {
               ),
               const SizedBox(height: 72),
               FilledButton.icon(
-                onPressed: () => Navigator.of(context).pushNamed(RouteNames.terms),
+                onPressed: () => Navigator.of(context).restorablePushNamed(RouteNames.terms),
                 icon: Icon(Icons.navigate_next),
                 label: Text('Continue'),
               ),
