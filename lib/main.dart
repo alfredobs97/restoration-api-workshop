@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:restoration_api_workshop/ui/app_router.dart';
 import 'package:restoration_api_workshop/ui/pages/home/home_page.dart';
-import 'package:restoration_api_workshop/ui/pages/splash/splash_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,6 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Restoration API workshop',
+      restorationScopeId: 'root',
       theme: ThemeData.from(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlueAccent),
         textTheme: GoogleFonts.montserratTextTheme(),
