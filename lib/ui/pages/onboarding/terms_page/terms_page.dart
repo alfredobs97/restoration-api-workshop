@@ -8,7 +8,7 @@ class TermsPage extends StatefulWidget {
   State<TermsPage> createState() => _TermsPageState();
 }
 
-class _TermsPageState extends State<TermsPage> {
+class _TermsPageState extends State<TermsPage> with RestorationMixin {
   String termsAndConditions = """
 Welcome to the Buy GDG Tickets app!
 
@@ -28,7 +28,15 @@ The app is provided "as is" and the app developer makes no warranties, express o
 
 These terms and conditions are subject to the laws of the State of Spain.
 """;
-  bool _isTermsAccepted = false;
+  final RestorableBool _isTermsAccepted = RestorableBool(false);
+
+  @override
+  String? get restorationId => 'TermsPageRestorationId';
+
+  @override
+  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
+    registerForRestoration(_isTermsAccepted, "_isTermsAccepted");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +68,9 @@ These terms and conditions are subject to the laws of the State of Spain.
                     children: [
                       const Text('Agree to our Terms and Conditions'),
                       Checkbox.adaptive(
-                        value: _isTermsAccepted,
+                        value: _isTermsAccepted.value,
                         onChanged: (bool? value) => setState(() {
-                          _isTermsAccepted = value ?? false;
+                          _isTermsAccepted.value = value ?? false;
                         }),
                       )
                     ],
@@ -76,7 +84,8 @@ These terms and conditions are subject to the laws of the State of Spain.
                         child: Text('Come back'),
                       ),
                       FilledButton(
-                        onPressed: _isTermsAccepted ? () => Navigator.of(context).pushNamed(RouteNames.userForm) : null,
+                        onPressed:
+                            _isTermsAccepted.value ? () => Navigator.of(context).pushNamed(RouteNames.userForm) : null,
                         child: Text('Next'),
                       ),
                     ],
