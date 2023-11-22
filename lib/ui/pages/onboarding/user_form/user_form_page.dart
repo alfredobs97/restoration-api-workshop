@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:restoration_api_workshop/ui/utils/cities.dart';
+import 'package:restoration_api_workshop/ui/utils/restorable_cities.dart';
 
 class UserFormPage extends StatefulWidget {
   const UserFormPage({super.key});
@@ -8,22 +10,9 @@ class UserFormPage extends StatefulWidget {
 }
 
 class _UserFormPageState extends State<UserFormPage> with RestorationMixin {
-  final List<String> _cities = [
-    'Santiago de Compostela',
-    'Barcelona',
-    'Valencia',
-    'Sevilla',
-    'Zaragoza',
-    'Málaga',
-    'Murcia',
-    'Palma de Mallorca',
-    'Bilbao',
-  ];
-
-  String _citySelected = 'Santiago de Compostela';
-
   final RestorableTextEditingController _nameController = RestorableTextEditingController();
   final RestorableTextEditingController _emailController = RestorableTextEditingController();
+  final RestorableCities _city = RestorableCities();
 
   @override
   String? get restorationId => 'UserFormPageRestorationId';
@@ -32,6 +21,7 @@ class _UserFormPageState extends State<UserFormPage> with RestorationMixin {
   void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
     registerForRestoration(_nameController, '_nameController');
     registerForRestoration(_emailController, '_emailController');
+    registerForRestoration(_city, '_city');
   }
 
   @override
@@ -83,17 +73,17 @@ class _UserFormPageState extends State<UserFormPage> with RestorationMixin {
                       ),
                     ),
                   ),
-                  DropdownButtonFormField<String>(
-                    value: _citySelected,
-                    items: _cities.map((ciudad) {
+                  DropdownButtonFormField<Cities>(
+                    value: _city.value,
+                    items: Cities.values.map((city) {
                       return DropdownMenuItem(
-                        value: ciudad,
-                        child: Text(ciudad),
+                        value: city,
+                        child: Text(city.name),
                       );
                     }).toList(),
-                    onChanged: (ciudadSeleccionada) {
+                    onChanged: (citySelected) {
                       setState(() {
-                        _citySelected = ciudadSeleccionada ?? _citySelected;
+                        _city.value = citySelected ?? _city.value;
                       });
                     },
                     decoration: InputDecoration(
